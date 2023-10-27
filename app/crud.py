@@ -28,6 +28,14 @@ def buy_item(db: Session, item: schemas.Item):
         return db_item
     else:
         return None
+    
+def add_item(db: Session, item: schemas.Item):
+    db_item = models.Item(id=item.id, quantity=item.quantity)
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+    
 
 def get_all_items(db: Session):
     return db.query(models.Item).all()

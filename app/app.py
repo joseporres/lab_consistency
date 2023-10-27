@@ -5,7 +5,7 @@ import uvicorn
 from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 from datetime import datetime
-import requests
+
 
 app = FastAPI(
     title=api_settings.TITLE,
