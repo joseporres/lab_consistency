@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from app import models, schemas
 from app.schemas import serialize_item
+from sqlalchemy.orm.exc import StaleDataError
+
 
 ##################################################################
 ############## PRIVATE FUNCTIONS #################################
@@ -72,21 +74,22 @@ def buy_item_with_transation(db:Session, item:schemas.Item):
             raise Exception("Not enough items in stock")
     else:
         return None
-
     
 def buy_item_optimistic_locking(db: Session, item: schemas.Item):
-    db_item = db.query(models.Item).filter(models.Item.id == item.id).first()
-    if db_item:
-        if db_item.quantity >= item.quantity:
-            db_item.quantity -= item.quantity
-            db_item.version += 1  # Increment the version to indicate the change
-            db.commit()
-            db.refresh(db_item)
-            return serialize_item(db_item)
+    try:
+        db_item = db.query(models.Item).filter(models.Item.id == item.id).first()
+        if db_item:
+            if db_item.quantity >= item.quantity:
+                db_item.quantity -= item.quantity
+                db.commit()
+                db.refresh(db_item)
+                return serialize_item(db_item)
+            else:
+                raise Exception("Not enough items in stock")
         else:
-            raise Exception("Not enough items in stock")
-    else:
-        return None
+            return None
+    except StaleDataError:
+        print("someone has changed the account, plz retry.")
     
 def buy_item_pessimistic_locking(db: Session, item: schemas.Item):
     db_item = db.query(models.Item).filter(models.Item.id == item.id).with_for_update().first()

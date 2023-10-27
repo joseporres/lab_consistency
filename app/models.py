@@ -10,3 +10,7 @@ class Item(Base):
     id = Column(Integer, primary_key=True,
                 index=True)
     quantity = Column(Integer, default=10)
+    version = Column(Integer, default=0)
+
+    __mapper_args__ = {"version_id_col": version}
+    

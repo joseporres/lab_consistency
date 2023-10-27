@@ -1,4 +1,5 @@
 CREATE TABLE IF NOT EXISTS items (
     id INT PRIMARY KEY,
     quantity INT DEFAULT 10
+    version INT DEFAULT 0
 );
