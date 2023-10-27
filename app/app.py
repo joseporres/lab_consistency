@@ -1,10 +1,21 @@
-from fastapi import FastAPI, Request,Header, Response
+from fastapi import FastAPI,Depends,HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from app.config.settings import api_settings
 import uvicorn
-from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 from datetime import datetime
+from app.database import SessionLocal
+from sqlalchemy.orm import Session
+import app.crud as crud
+from app.schemas import Item
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 app = FastAPI(
@@ -34,10 +45,74 @@ def root():
 def get_all_products(type: str):
     pass
 
+
+@app.post("/buy-transaction")
+def buy_transaction(
+    item : Item,
+    db: Session = Depends(get_db)):
+    resItem = crud.buy_item_with_transation(db, item)
+    if resItem:
+        return JSONResponse(
+            status_code=200,
+            content=resItem
+        )
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
+
 # buy item from shop /buy
+@app.post("/buy-pesimistic")
+def buy_pesimistic(
+    item : Item,
+    db: Session = Depends(get_db)):
+    resItem = crud.buy_item_pessimistic_locking(db, item)
+    if resItem:
+        return JSONResponse(
+            status_code=200,
+            content=resItem
+        )
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+@app.post("/buy-optimistic")
+def buy_optimistic(
+    item : Item,
+    db: Session = Depends(get_db)):
+    resItem = crud.buy_item_optimistic_locking(db, item)
+    if resItem:
+        return JSONResponse(
+            status_code=200,
+            content=resItem
+        )
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
+    
+
+
 @app.post("/buy")
+def buy(
+    item : Item,
+    db: Session = Depends(get_db)):
+    resItem = crud.buy_item(db, item)
+    if resItem:
+        return JSONResponse(
+            status_code=200,
+            content=resItem
+        )
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
+    
 
+@app.post('/insert')
+def insert( 
+    item : Item ,
+    db: Session = Depends(get_db)):
+    resItem = crud.add_item(db, item)
+    return JSONResponse(
+        status_code=200,
+        content=resItem
+    )
 
+    
 def run():
     uvicorn.run(app,
                 host=api_settings.HOST,

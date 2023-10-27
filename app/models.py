@@ -8,6 +8,5 @@ class Item(Base):
     __tablename__ = "items"
 
     id = Column(Integer, primary_key=True,
-                autoincrement=True,
                 index=True)
     quantity = Column(Integer, default=10)
