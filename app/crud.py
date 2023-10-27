@@ -31,3 +31,4 @@ def buy_item(db: Session, item: schemas.Item):
 
 def get_all_items(db: Session):
     return db.query(models.Item).all()
+    
