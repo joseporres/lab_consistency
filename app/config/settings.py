@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     PORT: int
     TITLE: str
     PREFIX: str
+    SQL_DATABASE_URI: str
 
 
 

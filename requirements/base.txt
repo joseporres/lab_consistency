@@ -87,6 +87,8 @@ pydantic-settings==2.0.3
     # via -r requirements/base.in
 pygments==2.16.1
     # via ipython
+pymysql==1.1.0
+    # via -r requirements/base.in
 python-dateutil==2.8.2
     # via jupyter-client
 python-dotenv==1.0.0

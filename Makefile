@@ -14,3 +14,5 @@ run:
 watch:
 	uvicorn app.app:app --reload
 	
+seed:
+	python -m app.seed

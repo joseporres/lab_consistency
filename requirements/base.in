@@ -3,3 +3,4 @@ uvicorn[standard]
 ipykernel
 pydantic_settings
 sqlalchemy
+pymysql
