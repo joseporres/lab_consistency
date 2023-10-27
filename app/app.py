@@ -28,6 +28,17 @@ app.router.prefix = api_settings.PREFIX
 def root():
     return {"message": f"Welcome to {api_settings.TITLE}"}
 
+#get all products /query?type=ALL
+#query from db mysql with sqlalchemy
+@app.get("/query")
+def get_all_products(type: str):
+    try:
+        +
+
+# buy item from shop /buy
+@app.post("/buy")
+
+
 def run():
     uvicorn.run(app,
                 host=api_settings.HOST,
