@@ -18,3 +18,16 @@ def get_item(db: Session, itemId: str = None, page: int = 1, size: int = 10):
         "pages": total // size + 1 if total % size > 0 else total // size,
         "size": size
     }
+
+def buy_item(db: Session, item: schemas.Item):
+    db_item = db.query(models.Item).filter(models.Item.id == item.id).first()
+    if db_item:
+        db_item.quantity -= item.quantity
+        db.commit()
+        db.refresh(db_item)
+        return db_item
+    else:
+        return None
+
+def get_all_items(db: Session):
+    return db.query(models.Item).all()
