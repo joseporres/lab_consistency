@@ -4,3 +4,4 @@ ipykernel
 pydantic_settings
 sqlalchemy
 pymysql
+requests

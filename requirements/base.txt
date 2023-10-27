@@ -15,6 +15,10 @@ asttokens==2.4.0
     # via stack-data
 backcall==0.2.0
     # via ipython
+certifi==2023.7.22
+    # via requests
+charset-normalizer==3.3.1
+    # via requests
 click==8.1.7
     # via uvicorn
 comm==0.1.4
@@ -38,7 +42,9 @@ h11==0.14.0
 httptools==0.6.0
     # via uvicorn
 idna==3.4
-    # via anyio
+    # via
+    #   anyio
+    #   requests
 importlib-metadata==6.8.0
     # via jupyter-client
 ipykernel==6.25.2
@@ -101,6 +107,8 @@ pyzmq==25.1.1
     # via
     #   ipykernel
     #   jupyter-client
+requests==2.31.0
+    # via -r requirements/base.in
 six==1.16.0
     # via
     #   asttokens
@@ -134,6 +142,8 @@ typing-extensions==4.8.0
     #   sqlalchemy
     #   starlette
     #   uvicorn
+urllib3==2.0.7
+    # via requests
 uvicorn[standard]==0.23.2
     # via -r requirements/base.in
 uvloop==0.17.0
