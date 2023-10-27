@@ -1,4 +1,4 @@
-name: lab-soa
+name: lab-co
 channels:
   - defaults
 dependencies:

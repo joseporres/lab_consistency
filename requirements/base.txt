@@ -15,10 +15,6 @@ asttokens==2.4.0
     # via stack-data
 backcall==0.2.0
     # via ipython
-certifi==2023.7.22
-    # via requests
-charset-normalizer==3.3.0
-    # via requests
 click==8.1.7
     # via uvicorn
 comm==0.1.4
@@ -27,8 +23,6 @@ debugpy==1.8.0
     # via ipykernel
 decorator==5.1.1
     # via ipython
-dnspython==2.4.2
-    # via pymongo
 exceptiongroup==1.1.3
     # via
     #   anyio
@@ -37,14 +31,14 @@ executing==2.0.0
     # via stack-data
 fastapi==0.103.2
     # via -r requirements/base.in
+greenlet==3.0.1
+    # via sqlalchemy
 h11==0.14.0
     # via uvicorn
 httptools==0.6.0
     # via uvicorn
 idna==3.4
-    # via
-    #   anyio
-    #   requests
+    # via anyio
 importlib-metadata==6.8.0
     # via jupyter-client
 ipykernel==6.25.2
@@ -93,8 +87,6 @@ pydantic-settings==2.0.3
     # via -r requirements/base.in
 pygments==2.16.1
     # via ipython
-pymongo==4.5.0
-    # via -r requirements/base.in
 python-dateutil==2.8.2
     # via jupyter-client
 python-dotenv==1.0.0
@@ -107,14 +99,14 @@ pyzmq==25.1.1
     # via
     #   ipykernel
     #   jupyter-client
-requests==2.31.0
-    # via -r requirements/base.in
 six==1.16.0
     # via
     #   asttokens
     #   python-dateutil
 sniffio==1.3.0
     # via anyio
+sqlalchemy==2.0.22
+    # via -r requirements/base.in
 stack-data==0.6.3
     # via ipython
 starlette==0.27.0
@@ -137,10 +129,9 @@ typing-extensions==4.8.0
     #   ipython
     #   pydantic
     #   pydantic-core
+    #   sqlalchemy
     #   starlette
     #   uvicorn
-urllib3==2.0.6
-    # via requests
 uvicorn[standard]==0.23.2
     # via -r requirements/base.in
 uvloop==0.17.0
