@@ -5,7 +5,7 @@ import concurrent.futures
 url = "http://localhost:8000/v1"
 
 # Define the number of concurrent requests you want to send
-num_requests = 10  # You can adjust this number
+num_requests = 2  # You can adjust this number
 
 # Define the function to send a single HTTP request
 def send_request(i):

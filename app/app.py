@@ -42,8 +42,22 @@ def root():
 #get all products /query?type=ALL
 #query from db mysql with sqlalchemy
 @app.get("/query")
-def get_all_products(type: str):
-    pass
+def get_all_products(item_id: str = None, db: Session = Depends(get_db)):
+    if item_id:
+        resItem = crud.get_item(db, item_id)
+        if resItem:
+            return JSONResponse(
+                status_code=200,
+                content=resItem
+            )
+        else:
+            raise HTTPException(status_code=404, detail="Item not found")
+    else:
+        items = crud.get_all_items(db)
+        return JSONResponse(
+            status_code=200,
+            content=items
+        )
 
 
 @app.post("/buy-transaction")
@@ -59,32 +73,32 @@ def buy_transaction(
     else:
         raise HTTPException(status_code=404, detail="Item not found")
 
-# buy item from shop /buy
-@app.post("/buy-pesimistic")
-def buy_pesimistic(
-    item : Item,
-    db: Session = Depends(get_db)):
-    resItem = crud.buy_item_pessimistic_locking(db, item)
-    if resItem:
-        return JSONResponse(
-            status_code=200,
-            content=resItem
-        )
-    else:
-        raise HTTPException(status_code=404, detail="Item not found")
+# # buy item from shop /buy
+# @app.post("/buy-pesimistic")
+# def buy_pesimistic(
+#     item : Item,
+#     db: Session = Depends(get_db)):
+#     resItem = crud.buy_item_pessimistic_locking(db, item)
+#     if resItem:
+#         return JSONResponse(
+#             status_code=200,
+#             content=resItem
+#         )
+#     else:
+#         raise HTTPException(status_code=404, detail="Item not found")
 
-@app.post("/buy-optimistic")
-def buy_optimistic(
-    item : Item,
-    db: Session = Depends(get_db)):
-    resItem = crud.buy_item_optimistic_locking(db, item)
-    if resItem:
-        return JSONResponse(
-            status_code=200,
-            content=resItem
-        )
-    else:
-        raise HTTPException(status_code=404, detail="Item not found")
+# @app.post("/buy-optimistic")
+# def buy_optimistic(
+#     item : Item,
+#     db: Session = Depends(get_db)):
+#     resItem = crud.buy_item_optimistic_locking(db, item)
+#     if resItem:
+#         return JSONResponse(
+#             status_code=200,
+#             content=resItem
+#         )
+#     else:
+#         raise HTTPException(status_code=404, detail="Item not found")
     
 
 

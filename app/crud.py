@@ -22,26 +22,19 @@ def add_item(db: Session, item: schemas.Item):
 ############## SIMPLE CRUD #######################################
 ##################################################################
 
-def get_item(db: Session, itemId: str = None, page: int = 1, size: int = 10):
-    skip = (page - 1) * size
-    query = db.query(models.Item)
-
-    if itemId:
-        query = query.filter(models.Item.id == itemId)
-    
-    total = query.count()
-    data = query.offset(skip).limit(size).all()
-    data = [schemas.Item.from_orm(item) for item in data]
-    return {
-        "data": data,
-        "total": total,
-        "page": page,
-        "pages": total // size + 1 if total % size > 0 else total // size,
-        "size": size
-    }
+def get_item(db: Session, itemId:int):
+    # query = db.query.(models.Item.id == itemId)
+    query = db.query(models.Item).filter(models.Item.id == itemId).first()
+    if query:
+        return serialize_item(query)
+    else:
+        return None
 
 def get_all_items(db: Session):
-    return db.query(models.Item).all()
+    # print("get_all_items")
+    query = db.query(models.Item).all()
+    # print(query)
+    return [serialize_item(item) for item in query]
 
 def buy_item(db: Session, item: schemas.Item):
     db_item = db.query(models.Item).filter(models.Item.id == item.id).first()
