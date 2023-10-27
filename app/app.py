@@ -32,8 +32,7 @@ def root():
 #query from db mysql with sqlalchemy
 @app.get("/query")
 def get_all_products(type: str):
-    try:
-        +
+    pass
 
 # buy item from shop /buy
 @app.post("/buy")
