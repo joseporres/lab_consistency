@@ -87,18 +87,18 @@ def buy_transaction(
 #     else:
 #         raise HTTPException(status_code=404, detail="Item not found")
 
-# @app.post("/buy-optimistic")
-# def buy_optimistic(
-#     item : Item,
-#     db: Session = Depends(get_db)):
-#     resItem = crud.buy_item_optimistic_locking(db, item)
-#     if resItem:
-#         return JSONResponse(
-#             status_code=200,
-#             content=resItem
-#         )
-#     else:
-#         raise HTTPException(status_code=404, detail="Item not found")
+@app.post("/buy-optimistic")
+def buy_optimistic(
+    item : Item,
+    db: Session = Depends(get_db)):
+    resItem = crud.buy_item_optimistic_locking(db, item)
+    if resItem:
+        return JSONResponse(
+            status_code=200,
+            content=resItem
+        )
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
     
 
 
